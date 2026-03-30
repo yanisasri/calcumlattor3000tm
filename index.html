@@ -971,7 +971,10 @@ function triggerPopup(id) {
 }
 
 function closePopup(id) {
-  document.getElementById(id).style.display = 'none';
+  const el = document.getElementById(id);
+  // Stop any videos inside the popup
+  el.querySelectorAll('video').forEach(v => { v.pause(); v.currentTime = 0; });
+  el.style.display = 'none';
   // Check if any popups still open
   const openPopups = document.querySelectorAll('.meme-popup[style*="block"]');
   if (openPopups.length === 0 && document.getElementById('equals-popup').style.display !== 'block') {
@@ -980,7 +983,9 @@ function closePopup(id) {
 }
 
 function closeEqualsPopup() {
-  document.getElementById('equals-popup').style.display = 'none';
+  const el = document.getElementById('equals-popup');
+  el.querySelectorAll('video').forEach(v => { v.pause(); v.currentTime = 0; });
+  el.style.display = 'none';
   document.getElementById('overlay-bg').style.display = 'none';
 }
 
@@ -1011,18 +1016,34 @@ function prevLetter() {
 }
 
 // ==================== AUDIO ====================
+// Background music elements (loop continuously, managed separately)
+const bgMusicIds = new Set(['audio-cookies','audio-butterfly','audio-baby-sticker','audio-one-more-time']);
+
+// Single soundboard channel — only one sound effect plays at a time
+let currentSfx = null;
+
 function playAudio(id) {
+  // Background music: plays independently, not interrupted by soundboard
   const el = document.getElementById(id);
   if (el) { el.currentTime = 0; el.play().catch(()=>{}); }
 }
 
 function playSound(id) {
   const el = document.getElementById(id);
-  if (el) { el.currentTime = 0; el.play().catch(()=>{}); }
+  if (!el) return;
+  // Stop the currently playing sound effect (if any)
+  if (currentSfx && currentSfx !== el) {
+    currentSfx.pause();
+    currentSfx.currentTime = 0;
+  }
+  currentSfx = el;
+  el.currentTime = 0;
+  el.play().catch(()=>{});
 }
 
 function stopAllAudio() {
   document.querySelectorAll('audio').forEach(a => { a.pause(); a.currentTime = 0; });
+  currentSfx = null;
 }
 
 // ==================== PAGE ROUTING ====================
