@@ -278,7 +278,7 @@
 
 <!-- AUDIO ELEMENTS -->
 <audio id="audio-cookies" src="audio/cookies.mp3" loop></audio>
-<audio id="audio-butterfly" src="butterfly.mp3" loop></audio>
+<audio id="audio-butterfly" src="audio/butterfly.mp3" loop></audio>
 <audio id="audio-baby-sticker" src="audio/baby-sticker.mp3" loop></audio>
 <audio id="audio-one-more-time" src="audio/one-more-time.mp3" loop></audio>
 <audio id="audio-wow" src="audio/wow.mp3"></audio>
@@ -293,6 +293,7 @@
 <audio id="audio-v6" src="audio/suedby6.mp3"></audio>
 <audio id="audio-v7" src="audio/omg.mp3"></audio>
 <audio id="audio-v8" src="audio/nina.mp3"></audio>
+<audio id="audio-v9" src="audio/dog-laughing.mp3"></audio>
 <audio id="audio-v0" src="audio/oee.mp3"></audio>
 <audio id="audio-burgerking" src="audio/burgerking.mp3"></audio>
 <audio id="audio-44" src="audio/44-thats-me.mp3"></audio>
@@ -572,6 +573,7 @@ const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 // ==================== LANDING PAGE ====================
 function acceptCookies() {
   document.getElementById('cookie-popup').style.display = 'none';
+  stopAllAudio();
   playAudio('audio-butterfly');
 }
 
